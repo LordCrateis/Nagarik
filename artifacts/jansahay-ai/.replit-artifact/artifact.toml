@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "JanSahay AI"
+description = "A citizen-benefits navigator that evaluates eligibility, detects conflicts, and builds an optimized bundle of synthetic government-style benefits with an actionable application checklist."
+version = "1.0.0"
+id = "artifacts/jansahay-ai"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20016
+
+[services.development]
+run = "pnpm --filter @workspace/jansahay-ai run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/jansahay-ai", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/jansahay-ai/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20016"
+BASE_PATH = "/"

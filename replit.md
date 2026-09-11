@@ -1,6 +1,6 @@
-# [Project name]
+# JanSahay AI
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+JanSahay AI is a synthetic citizen-benefits navigator that evaluates eligibility, detects conflicts, optimizes a compatible support bundle, and creates a document-first application checklist.
 
 ## Run & Operate
 
@@ -22,11 +22,19 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/jansahay-ai` — React/Vite frontend with landing, profile intake, and results routes
+- `artifacts/api-server/src/lib/schemes.ts` — synthetic scheme catalog and data-driven criteria
+- `artifacts/api-server/src/lib/benefit-engine.ts` — eligibility, conflict, optimization, document, and checklist services
+- `artifacts/api-server/src/routes/benefits.ts` — benefits API routes
+- `lib/api-spec/openapi.yaml` — API contract source of truth
+- `README.md` — product overview and demo instructions
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The core engine is deterministic and local so a hackathon demo never depends on an LLM or government API.
+- Scheme data is explicitly synthetic and the UI carries a prototype disclaimer throughout the experience.
+- Session profile/checklist state is in memory for the prototype; the API boundaries are kept ready for a future PostgreSQL persistence layer.
+- Bundle scoring intentionally combines benefit value, need match, document readiness, and category diversity rather than returning every eligible scheme.
 
 ## Product
 
