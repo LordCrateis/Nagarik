@@ -80,19 +80,19 @@ const SelectContent = React.forwardRef<
         className,
       )}
       position={position}
+      collisionPadding={12}
       {...props}
+      style={{ ...props.style, display: 'flex', flexDirection: 'column', overflow: 'hidden', maxHeight: 'min(16rem, var(--radix-select-content-available-height, 16rem))' }}
     >
-      <SelectScrollUpButton />
       <SelectPrimitive.Viewport
         className={cn(
-          'max-h-[--radix-select-content-available-height] touch-pan-y overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden p-1',
+          'min-h-0 flex-1 touch-pan-y overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden p-1',
           position === 'popper' &&
-            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]',
+            'w-full min-w-[var(--radix-select-trigger-width)]',
         )}
       >
         {children}
       </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
     </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
 ));
