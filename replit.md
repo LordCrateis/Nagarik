@@ -1,6 +1,6 @@
-# JanSahay AI
+# Nagarik
 
-JanSahay AI is a synthetic citizen-benefits navigator that evaluates eligibility, detects conflicts, optimizes a compatible support bundle, and creates a document-first application checklist.
+Nagarik is a synthetic citizen-benefits navigator that evaluates eligibility, detects conflicts, optimizes a compatible support bundle, and creates a document-first application checklist.
 
 ## Run & Operate
 

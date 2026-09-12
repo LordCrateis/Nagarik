@@ -1,3 +1,7 @@
-<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="180" height="180" rx="36" fill="#FF3C00"/>
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nagarik">
+  <rect width="64" height="64" rx="18" fill="#F4B942"/>
+  <path d="M32 8.5 51 16v14.2c0 11.8-7.5 20.3-19 25.3-11.5-5-19-13.5-19-25.3V16l19-7.5Z" fill="#0E5D5A"/>
+  <circle cx="32" cy="24" r="4.7" fill="#FFF8EA"/>
+  <path d="M22.5 43.5c1.8-7 5-10.5 9.5-10.5s7.7 3.5 9.5 10.5" stroke="#FFF8EA" stroke-width="4" stroke-linecap="round"/>
+  <path d="m43.3 18.1 1.25 2.85 2.85 1.25-2.85 1.25-1.25 2.85-1.25-2.85-2.85-1.25 2.85-1.25 1.25-2.85Z" fill="#F4B942"/>
 </svg>

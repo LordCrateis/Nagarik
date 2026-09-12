@@ -5,6 +5,17 @@
   "scripts": {
     "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
+    "dedupe:schemes": "node scripts/dedupe-scheme-cache.mjs",
+    "schemes:prepare": "C:/Users/shiva/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe scripts/extract_schemes.py --prepare-only",
+    "schemes:extract": "C:/Users/shiva/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe scripts/extract_schemes.py",
+    "schemes:catalog": "C:/Users/shiva/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe scripts/extract_schemes.py --build-only",
+    "schemes:ingest": "C:/Users/shiva/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe scripts/extract_schemes.py",
+    "schemes:recrawl": "C:/Users/shiva/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe scripts/recrawl_scheme_gaps.py --search-official",
+    "schemes:amounts": "C:/Users/shiva/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe scripts/recrawl_scheme_gaps.py --amount-gaps --search-official",
+    "schemes:extract-official": "C:/Users/shiva/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe scripts/enrich_scheme_details_local.py --force --amount-only",
+    "schemes:fill-gaps": "C:/Users/shiva/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe scripts/enrich_scheme_details.py",
+    "schemes:gem-context": "C:/Users/shiva/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe scripts/build_for_gem.py",
+    "test:rag-profiles": "node scripts/test_rag_profiles.mjs",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
   },

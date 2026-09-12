@@ -1,6 +1,6 @@
-# JanSahay AI
+# Nagarik
 
-JanSahay AI is a prototype citizen-benefits navigator. It takes a synthetic citizen profile, evaluates a local catalog of synthetic government-style schemes, detects incompatible combinations, selects an optimized bundle, identifies missing documents, and creates an application checklist.
+Nagarik is a prototype citizen-benefits navigator. It takes a synthetic citizen profile, evaluates a local catalog of synthetic government-style schemes, detects incompatible combinations, selects an optimized bundle, identifies missing documents, and creates an application checklist.
 
 > **Prototype notice:** All people, schemes, benefit amounts, and eligibility rules in this project are synthetic demo data. This is not an official government portal and should not be used as an eligibility determination.
 
@@ -10,7 +10,7 @@ People can be eligible for several forms of public support, but the rules are di
 
 ## Solution
 
-JanSahay presents a clear decision path:
+Nagarik presents a clear decision path:
 
 1. Citizen profile
 2. Eligibility analysis
@@ -106,7 +106,7 @@ pnpm run typecheck
 
 ## Demonstrate the project
 
-1. Open JanSahay AI at the root preview.
+1. Open Nagarik at the root preview.
 2. Choose **Student / low income** from the one-click demo profiles.
 3. Continue through the three profile steps.
 4. Select **Find my possible benefits**.

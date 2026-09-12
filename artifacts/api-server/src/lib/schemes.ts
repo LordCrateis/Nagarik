@@ -1,325 +1,75 @@
 import type { CitizenProfile, Scheme } from "@workspace/api-zod";
+import { generatedSchemeDetails, generatedSchemes } from "../generated/scheme-catalog";
 
-type Criterion = {
-  label: string;
-  evaluate: (profile: CitizenProfile) => boolean;
-  missing?: (profile: CitizenProfile) => string | undefined;
-};
-
-const normalized = (value: string) => value.trim().toLowerCase();
+type Criterion = { label: string; evaluate: (profile: CitizenProfile) => boolean };
 
 export type SchemeDefinition = Scheme & {
   criteria: Criterion[];
+  /** A transparent local relevance score; it never claims official approval. */
   needMatch: (profile: CitizenProfile) => number;
 };
 
-export const schemeDefinitions: SchemeDefinition[] = [
-  {
-    id: "s-education-scholarship",
-    name: "Udaan Education Grant",
-    category: "Education",
-    description: "Annual support for students from lower-income households to continue higher education.",
-    benefit: "Up to ₹36,000 per year",
-    benefitValue: 36000,
-    priority: "high",
-    benefitScore: 91,
-    eligibilityRules: ["Student status is active", "Annual income is ₹300,000 or below", "Age is between 16 and 30"],
-    requiredDocuments: ["Aadhaar", "Income Certificate", "Student ID", "Bank Passbook"],
-    conflicts: ["s-skill-stipend"],
-    stackableWith: ["s-digital-learning", "s-family-health", "s-food-security"],
-    applicationSteps: ["Verify institute enrollment", "Upload income certificate", "Submit grant application"],
-    criteria: [
-      { label: "Student status confirmed", evaluate: (p) => p.studentStatus },
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 300000 },
-      { label: "Age requirement satisfied", evaluate: (p) => p.age >= 16 && p.age <= 30 },
-    ],
-    needMatch: (p) => (p.studentStatus ? 1 : 0),
-  },
-  {
-    id: "s-skill-stipend",
-    name: "Kaushal Skill Stipend",
-    category: "Employment",
-    description: "A monthly stipend for young adults enrolled in certified job-readiness programs.",
-    benefit: "₹24,000 training stipend",
-    benefitValue: 24000,
-    priority: "high",
-    benefitScore: 80,
-    eligibilityRules: ["Age is between 18 and 35", "Not currently employed", "Annual income is ₹250,000 or below"],
-    requiredDocuments: ["Aadhaar", "Income Certificate", "Bank Passbook", "Training Enrollment"],
-    conflicts: ["s-education-scholarship"],
-    stackableWith: ["s-family-health", "s-food-security"],
-    applicationSteps: ["Choose a certified training track", "Confirm enrollment", "Submit stipend application"],
-    criteria: [
-      { label: "Age requirement satisfied", evaluate: (p) => p.age >= 18 && p.age <= 35 },
-      { label: "Employment requirement satisfied", evaluate: (p) => normalized(p.employmentStatus) === "unemployed" },
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 250000 },
-    ],
-    needMatch: (p) => (normalized(p.employmentStatus) === "unemployed" ? 1 : 0.35),
-  },
-  {
-    id: "s-digital-learning",
-    name: "Digital Learning Access",
-    category: "Education",
-    description: "Device and connectivity support for students completing coursework digitally.",
-    benefit: "₹18,000 device support",
-    benefitValue: 18000,
-    priority: "standard",
-    benefitScore: 74,
-    eligibilityRules: ["Student status is active", "Household income is ₹400,000 or below"],
-    requiredDocuments: ["Aadhaar", "Student ID", "Bank Passbook"],
-    conflicts: [],
-    stackableWith: ["s-education-scholarship", "s-family-health"],
-    applicationSteps: ["Confirm digital learning need", "Upload student ID", "Select device support"],
-    criteria: [
-      { label: "Student status confirmed", evaluate: (p) => p.studentStatus },
-      { label: "Household income requirement satisfied", evaluate: (p) => p.annualIncome <= 400000 },
-    ],
-    needMatch: (p) => (p.studentStatus ? 0.95 : 0),
-  },
-  {
-    id: "s-family-health",
-    name: "Swasthya Family Cover",
-    category: "Healthcare",
-    description: "A family health cover top-up for households with limited annual income.",
-    benefit: "₹75,000 annual cover",
-    benefitValue: 75000,
-    priority: "essential",
-    benefitScore: 87,
-    eligibilityRules: ["Family income is ₹350,000 or below", "Family has at least two members"],
-    requiredDocuments: ["Aadhaar", "Income Certificate", "Family ID"],
-    conflicts: [],
-    stackableWith: ["s-education-scholarship", "s-digital-learning", "s-food-security"],
-    applicationSteps: ["Verify family members", "Upload income certificate", "Choose a health center"],
-    criteria: [
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 350000 },
-      { label: "Family size requirement satisfied", evaluate: (p) => p.familySize >= 2 },
-    ],
-    needMatch: (p) => (p.familySize >= 4 ? 1 : 0.8),
-  },
-  {
-    id: "s-food-security",
-    name: "Parivaar Food Security",
-    category: "Food Security",
-    description: "Monthly household food support for families below the income threshold.",
-    benefit: "₹12,000 estimated annual value",
-    benefitValue: 12000,
-    priority: "essential",
-    benefitScore: 84,
-    eligibilityRules: ["Annual income is ₹220,000 or below", "Family has at least three members"],
-    requiredDocuments: ["Aadhaar", "Income Certificate", "Family ID"],
-    conflicts: ["s-nutrition-support"],
-    stackableWith: ["s-education-scholarship", "s-family-health", "s-skill-stipend"],
-    applicationSteps: ["Verify household members", "Confirm ration preference", "Submit food support request"],
-    criteria: [
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 220000 },
-      { label: "Family size requirement satisfied", evaluate: (p) => p.familySize >= 3 },
-    ],
-    needMatch: (p) => (p.familySize >= 4 && p.annualIncome <= 180000 ? 1 : 0.75),
-  },
-  {
-    id: "s-nutrition-support",
-    name: "Poshan Household Support",
-    category: "Food Security",
-    description: "A nutrition-focused monthly allowance for families that need supplemental support.",
-    benefit: "₹9,000 estimated annual value",
-    benefitValue: 9000,
-    priority: "standard",
-    benefitScore: 71,
-    eligibilityRules: ["Annual income is ₹180,000 or below", "Family has at least three members"],
-    requiredDocuments: ["Aadhaar", "Income Certificate", "Family ID"],
-    conflicts: ["s-food-security"],
-    stackableWith: ["s-family-health"],
-    applicationSteps: ["Complete household nutrition survey", "Upload family ID", "Submit support request"],
-    criteria: [
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 180000 },
-      { label: "Family size requirement satisfied", evaluate: (p) => p.familySize >= 3 },
-    ],
-    needMatch: (p) => (p.annualIncome <= 180000 ? 0.9 : 0.45),
-  },
-  {
-    id: "s-farmer-input",
-    name: "Kisan Input Support",
-    category: "Agriculture",
-    description: "Seasonal support for seeds and soil inputs for small and marginal farmers.",
-    benefit: "₹20,000 seasonal support",
-    benefitValue: 20000,
-    priority: "high",
-    benefitScore: 82,
-    eligibilityRules: ["Farmer status is active", "Land holding is 5 acres or below"],
-    requiredDocuments: ["Aadhaar", "Land Record", "Bank Passbook"],
-    conflicts: [],
-    stackableWith: ["s-irrigation-assist", "s-family-health"],
-    applicationSteps: ["Verify land record", "Choose input package", "Confirm seasonal crop"],
-    criteria: [
-      { label: "Farmer status confirmed", evaluate: (p) => p.farmerStatus },
-      { label: "Small holding requirement satisfied", evaluate: (p) => p.landSize == null || p.landSize <= 5, missing: (p) => p.landSize == null ? "Land size" : undefined },
-    ],
-    needMatch: (p) => (p.farmerStatus ? 1 : 0),
-  },
-  {
-    id: "s-irrigation-assist",
-    name: "Jal Setu Irrigation Assist",
-    category: "Agriculture",
-    description: "Co-funding for water-saving irrigation equipment on small farms.",
-    benefit: "Up to ₹45,000 equipment support",
-    benefitValue: 45000,
-    priority: "high",
-    benefitScore: 86,
-    eligibilityRules: ["Farmer status is active", "Land holding is 10 acres or below"],
-    requiredDocuments: ["Aadhaar", "Land Record", "Water Source Declaration"],
-    conflicts: [],
-    stackableWith: ["s-farmer-input"],
-    applicationSteps: ["Upload land record", "Choose approved equipment", "Schedule field verification"],
-    criteria: [
-      { label: "Farmer status confirmed", evaluate: (p) => p.farmerStatus },
-      { label: "Holding size requirement satisfied", evaluate: (p) => p.landSize == null || p.landSize <= 10, missing: (p) => p.landSize == null ? "Land size" : undefined },
-    ],
-    needMatch: (p) => (p.farmerStatus ? 0.95 : 0),
-  },
-  {
-    id: "s-housing-repair",
-    name: "Ghar Sudhaar Repair Grant",
-    category: "Housing",
-    description: "Basic repair support for households living in rented or kutcha housing.",
-    benefit: "Up to ₹55,000 repair grant",
-    benefitValue: 55000,
-    priority: "high",
-    benefitScore: 83,
-    eligibilityRules: ["Housing is rented or kutcha", "Annual income is ₹300,000 or below"],
-    requiredDocuments: ["Aadhaar", "Income Certificate", "Residence Proof", "Housing Declaration"],
-    conflicts: ["s-housing-upgrade"],
-    stackableWith: ["s-family-health"],
-    applicationSteps: ["Upload residence proof", "Describe repair need", "Schedule local verification"],
-    criteria: [
-      { label: "Housing need identified", evaluate: (p) => normalized(p.housingStatus) === "rented" || normalized(p.housingStatus) === "renting" || normalized(p.housingStatus) === "kutcha" || normalized(p.housingStatus) === "temporary housing" },
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 300000 },
-    ],
-    needMatch: (p) => (normalized(p.housingStatus) === "kutcha" || normalized(p.housingStatus) === "temporary housing" ? 1 : 0.85),
-  },
-  {
-    id: "s-housing-upgrade",
-    name: "Awas Upgrade Support",
-    category: "Housing",
-    description: "A larger housing improvement grant for families without adequate housing.",
-    benefit: "Up to ₹85,000 upgrade support",
-    benefitValue: 85000,
-    priority: "high",
-    benefitScore: 88,
-    eligibilityRules: ["Housing is kutcha", "Annual income is ₹200,000 or below"],
-    requiredDocuments: ["Aadhaar", "Income Certificate", "Residence Proof", "Land Record"],
-    conflicts: ["s-housing-repair"],
-    stackableWith: ["s-family-health"],
-    applicationSteps: ["Verify residence", "Complete housing assessment", "Submit upgrade plan"],
-    criteria: [
-      { label: "Housing need identified", evaluate: (p) => normalized(p.housingStatus) === "kutcha" || normalized(p.housingStatus) === "temporary housing" },
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 200000 },
-    ],
-    needMatch: (p) => (normalized(p.housingStatus) === "kutcha" || normalized(p.housingStatus) === "temporary housing" ? 1 : 0),
-  },
-  {
-    id: "s-micro-enterprise",
-    name: "Nayi Disha Micro-Enterprise",
-    category: "Entrepreneurship",
-    description: "Starter capital and mentoring for people creating a small local enterprise.",
-    benefit: "₹60,000 launch support",
-    benefitValue: 60000,
-    priority: "standard",
-    benefitScore: 78,
-    eligibilityRules: ["Age is between 18 and 55", "Annual income is ₹350,000 or below", "Not currently employed"],
-    requiredDocuments: ["Aadhaar", "Income Certificate", "Bank Passbook", "Business Plan"],
-    conflicts: ["s-women-enterprise"],
-    stackableWith: ["s-skill-stipend"],
-    applicationSteps: ["Draft a one-page business plan", "Attend orientation", "Submit capital request"],
-    criteria: [
-      { label: "Age requirement satisfied", evaluate: (p) => p.age >= 18 && p.age <= 55 },
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 350000 },
-      { label: "Employment requirement satisfied", evaluate: (p) => normalized(p.employmentStatus) === "unemployed" },
-    ],
-    needMatch: (p) => (normalized(p.employmentStatus) === "unemployed" ? 0.85 : 0.3),
-  },
-  {
-    id: "s-women-enterprise",
-    name: "Sakhi Women Enterprise",
-    category: "Women Empowerment",
-    description: "Business starter support and peer mentoring for women entrepreneurs.",
-    benefit: "₹70,000 enterprise support",
-    benefitValue: 70000,
-    priority: "high",
-    benefitScore: 85,
-    eligibilityRules: ["Gender is woman", "Age is between 18 and 60", "Annual income is ₹400,000 or below"],
-    requiredDocuments: ["Aadhaar", "Income Certificate", "Bank Passbook", "Business Plan"],
-    conflicts: ["s-micro-enterprise"],
-    stackableWith: ["s-family-health"],
-    applicationSteps: ["Attend an orientation", "Create a business plan", "Submit enterprise request"],
-    criteria: [
-      { label: "Gender requirement satisfied", evaluate: (p) => normalized(p.gender) === "woman" },
-      { label: "Age requirement satisfied", evaluate: (p) => p.age >= 18 && p.age <= 60 },
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 400000 },
-    ],
-    needMatch: (p) => (normalized(p.gender) === "woman" ? 1 : 0),
-  },
-  {
-    id: "s-disability-assist",
-    name: "Saksham Disability Assist",
-    category: "Disability Support",
-    description: "Assistive device and travel support for citizens with a documented disability.",
-    benefit: "₹40,000 assistive support",
-    benefitValue: 40000,
-    priority: "essential",
-    benefitScore: 90,
-    eligibilityRules: ["Disability status is active", "Annual income is ₹500,000 or below"],
-    requiredDocuments: ["Aadhaar", "Disability Certificate", "Bank Passbook"],
-    conflicts: [],
-    stackableWith: ["s-family-health", "s-education-scholarship"],
-    applicationSteps: ["Upload disability certificate", "Choose assistive support", "Book assessment"],
-    criteria: [
-      { label: "Disability status confirmed", evaluate: (p) => p.disabilityStatus },
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 500000 },
-    ],
-    needMatch: (p) => (p.disabilityStatus ? 1 : 0),
-  },
-  {
-    id: "s-senior-pension",
-    name: "Jeevan Samman Pension",
-    category: "Pension",
-    description: "Monthly income support for senior citizens with limited annual income.",
-    benefit: "₹24,000 annual pension",
-    benefitValue: 24000,
-    priority: "essential",
-    benefitScore: 94,
-    eligibilityRules: ["Age is 60 or above", "Annual income is ₹250,000 or below"],
-    requiredDocuments: ["Aadhaar", "Age Proof", "Income Certificate", "Bank Passbook"],
-    conflicts: ["s-senior-work"],
-    stackableWith: ["s-family-health", "s-food-security"],
-    applicationSteps: ["Verify age proof", "Confirm bank account", "Submit pension request"],
-    criteria: [
-      { label: "Senior age requirement satisfied", evaluate: (p) => p.age >= 60 },
-      { label: "Income requirement satisfied", evaluate: (p) => p.annualIncome <= 250000 },
-    ],
-    needMatch: (p) => (p.age >= 60 ? 1 : 0),
-  },
-  {
-    id: "s-senior-work",
-    name: "Senior Community Work",
-    category: "Employment",
-    description: "Flexible local work placements for active seniors who want supplemental income.",
-    benefit: "₹18,000 annual honorarium",
-    benefitValue: 18000,
-    priority: "standard",
-    benefitScore: 66,
-    eligibilityRules: ["Age is 60 or above", "Employment status is unemployed"],
-    requiredDocuments: ["Aadhaar", "Age Proof", "Bank Passbook"],
-    conflicts: ["s-senior-pension"],
-    stackableWith: ["s-family-health"],
-    applicationSteps: ["Choose a local placement", "Confirm availability", "Submit work preference"],
-    criteria: [
-      { label: "Senior age requirement satisfied", evaluate: (p) => p.age >= 60 },
-      { label: "Employment requirement satisfied", evaluate: (p) => normalized(p.employmentStatus) === "unemployed" },
-    ],
-    needMatch: (p) => (p.age >= 60 ? 0.7 : 0),
-  },
-];
+const INDIAN_STATES = ["andhra pradesh", "arunachal pradesh", "assam", "bihar", "chhattisgarh", "goa", "gujarat", "haryana", "himachal pradesh", "jharkhand", "karnataka", "kerala", "madhya pradesh", "maharashtra", "manipur", "meghalaya", "mizoram", "nagaland", "odisha", "punjab", "rajasthan", "sikkim", "tamil nadu", "telangana", "tripura", "uttar pradesh", "uttarakhand", "west bengal", "delhi", "jammu and kashmir", "ladakh", "puducherry"];
+const lower = (value: string) => value.toLowerCase();
 
-export const schemes: Scheme[] = schemeDefinitions.map(({ criteria: _criteria, needMatch: _needMatch, ...scheme }) => scheme);
+function incomeLimit(rule: string): number | null {
+  const normalized = lower(rule).replace(/,/g, "");
+  if (!/(income|annual income|family income|household income)/.test(normalized)) return null;
+  const lakh = normalized.match(/(?:rs\.?|₹)?\s*(\d+(?:\.\d+)?)\s*(?:lakh|lac)/);
+  if (lakh) return Number(lakh[1]) * 100000;
+  const rupees = normalized.match(/(?:rs\.?|₹)\s*(\d{4,7})/);
+  if (!rupees) return null;
+  const amount = Number(rupees[1]);
+  return /(monthly|per month)/.test(normalized) ? amount * 12 : amount;
+}
 
+function criteriaFor(scheme: Scheme): Criterion[] {
+  const criteria: Criterion[] = [];
+  const seen = new Set<string>();
+  const add = (key: string, label: string, evaluate: (profile: CitizenProfile) => boolean) => { if (!seen.has(key)) { seen.add(key); criteria.push({ label, evaluate }); } };
+  for (const rule of scheme.eligibilityRules) {
+    const text = lower(rule);
+    const state = INDIAN_STATES.find((name) => text.includes(name));
+    if (state) add(`state:${state}`, `Residence requirement: ${state.replace(/\b\w/g, (letter) => letter.toUpperCase())}`, (profile) => lower(profile.state).includes(state));
+    const ageRange = text.match(/(?:age (?:group |between )?|aged?\s+)(\d{1,3})\s*(?:to|[-–])\s*(\d{1,3})/);
+    if (ageRange) { const minimum = Number(ageRange[1]); const maximum = Number(ageRange[2]); add(`age:${minimum}-${maximum}`, `Age must be ${minimum}–${maximum}`, (profile) => profile.age >= minimum && profile.age <= maximum); }
+    else {
+      const minimumAge = text.match(/(?:age|aged?)\s*(?:of\s*)?(\d{1,3})\s*(?:years?)?\s*(?:or|and)?\s*(?:above|older|more)/);
+      if (minimumAge) { const minimum = Number(minimumAge[1]); add(`age-min:${minimum}`, `Age must be ${minimum} or above`, (profile) => profile.age >= minimum); }
+      const maximumAge = text.match(/(?:below|under|less than)\s*(\d{1,3})\s*(?:years?|year)?/);
+      if (maximumAge && /age|years? old/.test(text)) { const maximum = Number(maximumAge[1]); add(`age-max:${maximum}`, `Age must be below ${maximum}`, (profile) => profile.age < maximum); }
+    }
+    const limit = incomeLimit(rule);
+    if (limit !== null && /(below|less than|not exceed|up to|maximum|under|within)/.test(text)) add(`income:${limit}`, `Income must be at most ₹${limit.toLocaleString("en-IN")}`, (profile) => profile.annualIncome > 0 && profile.annualIncome <= limit);
+    if (/\bsc\b|scheduled caste/.test(text)) add("category:sc", "Reserved for Scheduled Caste applicants", (profile) => lower(profile.category) === "sc");
+    if (/\bst\b|scheduled tribe/.test(text)) add("category:st", "Reserved for Scheduled Tribe applicants", (profile) => lower(profile.category) === "st");
+    if (/\bobc\b|other backward class/.test(text)) add("category:obc", "Reserved for OBC applicants", (profile) => lower(profile.category) === "obc");
+    if (/disabilit|divyang|pwd|persons? with disabilities/.test(text)) add("disability", "For persons with disabilities", (profile) => profile.disabilityStatus);
+    if (/student|studying|education|college|university|school/.test(text)) add("student", "For students", (profile) => profile.studentStatus || /student/.test(lower(profile.occupation)));
+    if (/farmer|agricultur|cultivator|landholder/.test(text)) add("farmer", "For farmers or cultivators", (profile) => profile.farmerStatus || /farmer|agricultur/.test(lower(profile.occupation)));
+    if (/women|woman|female|girl/.test(text)) add("woman", "For women applicants", (profile) => lower(profile.gender) === "woman");
+  }
+  return criteria;
+}
+
+function needMatchFor(scheme: Scheme, profile: CitizenProfile): number {
+  const text = lower(`${scheme.name} ${scheme.category} ${scheme.description} ${scheme.benefit} ${scheme.eligibilityRules.join(" ")}`);
+  let matched = 0; let signals = 0;
+  const score = (condition: boolean, terms: RegExp) => { if (terms.test(text)) { signals += 1; if (condition) matched += 1; } };
+  score(profile.studentStatus, /scholarship|student|education|college|school/);
+  score(profile.farmerStatus, /farmer|agricultur|crop|land|cultiv/);
+  score(profile.disabilityStatus, /disabilit|divyang|pwd/);
+  score(profile.age >= 60, /senior|old age|pension|elderly/);
+  score(["Renting", "Homeless", "Temporary housing"].includes(profile.housingStatus), /housing|home|shelter|hostel|rent/);
+  score(profile.annualIncome > 0 && profile.annualIncome <= 300000, /income|financial|assistance|subsid|allowance|welfare/);
+  score(profile.urgency === "high", /health|medical|food|insurance|pension|assistance|support/);
+  return signals ? matched / signals : 0.35;
+}
+
+// Parsed only from official eligibility text already in the local catalogue.
+export const schemeDefinitions: SchemeDefinition[] = generatedSchemes.map((scheme) => ({ ...scheme, criteria: criteriaFor(scheme), needMatch: (profile) => needMatchFor(scheme, profile) }));
+export const analysisSchemes: Scheme[] = generatedSchemes;
+export const schemes: Scheme[] = generatedSchemes;
 export const schemeById = new Map(schemeDefinitions.map((scheme) => [scheme.id, scheme]));
+export const publicSchemeById = new Map(generatedSchemes.map((scheme) => [scheme.id, scheme]));
+export const schemeDetailsById = new Map(generatedSchemeDetails.map((scheme) => [scheme.id, scheme]));

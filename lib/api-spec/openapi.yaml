@@ -11,7 +11,7 @@ tags:
   - name: health
     description: Health operations
   - name: schemes
-    description: Synthetic demo scheme catalog
+    description: Public scheme catalogue
   - name: analysis
     description: Deterministic eligibility and bundle analysis
   - name: citizens
@@ -34,7 +34,7 @@ paths:
     get:
       operationId: listSchemes
       tags: [schemes]
-      summary: List synthetic benefit schemes
+      summary: List benefit schemes
       responses:
         "200":
           description: Scheme catalog
@@ -48,7 +48,7 @@ paths:
     get:
       operationId: getScheme
       tags: [schemes]
-      summary: Get a synthetic benefit scheme
+      summary: Get a benefit scheme
       parameters:
         - name: id
           in: path

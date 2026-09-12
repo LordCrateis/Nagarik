@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Nagarik user flow</title>
+  <desc id="desc">Flowchart from sign up and profile creation through benefit checking, recommendations, document preparation, and application.</desc>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#334155"/>
+    </marker>
+    <style>
+      .title { font: 700 40px Poppins, Arial, sans-serif; fill: #172554; }
+      .subtitle { font: 400 18px Poppins, Arial, sans-serif; fill: #64748b; }
+      .step { font: 700 19px Poppins, Arial, sans-serif; fill: #172554; }
+      .detail { font: 400 14px Poppins, Arial, sans-serif; fill: #64748b; }
+      .number { font: 700 14px Poppins, Arial, sans-serif; fill: #ffffff; }
+      .branch { font: 600 14px Poppins, Arial, sans-serif; fill: #475569; }
+      .box { fill: #ffffff; stroke: #a5b4fc; stroke-width: 2; rx: 14; }
+      .result { fill: #eef2ff; stroke: #6366f1; stroke-width: 2; rx: 14; }
+      .action { fill: #f0fdf4; stroke: #4f9b70; stroke-width: 2; rx: 14; }
+      .arrow { fill: none; stroke: #334155; stroke-width: 2.5; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="#f8fafc"/>
+
+  <text x="800" y="72" text-anchor="middle" class="title">Nagarik User Flow</text>
+  <text x="800" y="105" text-anchor="middle" class="subtitle">From a basic profile to an explainable benefits plan</text>
+
+  <!-- Row 1 -->
+  <g transform="translate(70 185)">
+    <rect class="box" width="245" height="130"/>
+    <circle cx="26" cy="26" r="17" fill="#3730a3"/>
+    <text x="26" y="31" text-anchor="middle" class="number">1</text>
+    <text x="122.5" y="59" text-anchor="middle" class="step">Login or Sign Up</text>
+    <text x="122.5" y="88" text-anchor="middle" class="detail">Create an account</text>
+  </g>
+
+  <path class="arrow" d="M315 250 H365"/>
+
+  <g transform="translate(365 185)">
+    <rect class="box" width="245" height="130"/>
+    <circle cx="26" cy="26" r="17" fill="#3730a3"/>
+    <text x="26" y="31" text-anchor="middle" class="number">2</text>
+    <text x="122.5" y="59" text-anchor="middle" class="step">Basic Profile</text>
+    <text x="122.5" y="86" text-anchor="middle" class="detail">Age, location, household</text>
+    <text x="122.5" y="107" text-anchor="middle" class="detail">and income</text>
+  </g>
+
+  <path class="arrow" d="M610 250 H660"/>
+
+  <g transform="translate(660 185)">
+    <rect class="box" width="245" height="130"/>
+    <circle cx="26" cy="26" r="17" fill="#3730a3"/>
+    <text x="26" y="31" text-anchor="middle" class="number">3</text>
+    <text x="122.5" y="59" text-anchor="middle" class="step">Nagarik Dashboard</text>
+    <text x="122.5" y="88" text-anchor="middle" class="detail">View or start a check</text>
+  </g>
+
+  <path class="arrow" d="M905 250 H955"/>
+
+  <g transform="translate(955 185)">
+    <rect class="box" width="245" height="130"/>
+    <circle cx="26" cy="26" r="17" fill="#3730a3"/>
+    <text x="26" y="31" text-anchor="middle" class="number">4</text>
+    <text x="122.5" y="59" text-anchor="middle" class="step">Start Benefit Check</text>
+    <text x="122.5" y="86" text-anchor="middle" class="detail">Choose yourself or</text>
+    <text x="122.5" y="107" text-anchor="middle" class="detail">another beneficiary</text>
+  </g>
+
+  <path class="arrow" d="M1200 250 H1250"/>
+
+  <g transform="translate(1250 185)">
+    <rect class="box" width="280" height="130"/>
+    <circle cx="26" cy="26" r="17" fill="#3730a3"/>
+    <text x="26" y="31" text-anchor="middle" class="number">5</text>
+    <text x="140" y="59" text-anchor="middle" class="step">Fill Targeted Details</text>
+    <text x="140" y="86" text-anchor="middle" class="detail">Occupation, needs, status</text>
+    <text x="140" y="107" text-anchor="middle" class="detail">and available documents</text>
+  </g>
+
+  <!-- Down and back across row 2 -->
+  <path class="arrow" d="M1390 315 V415"/>
+
+  <g transform="translate(1250 415)">
+    <rect class="result" width="280" height="155"/>
+    <circle cx="26" cy="26" r="17" fill="#4f46e5"/>
+    <text x="26" y="31" text-anchor="middle" class="number">6</text>
+    <text x="140" y="52" text-anchor="middle" class="step">Check Scheme Rules</text>
+    <text x="140" y="82" text-anchor="middle" class="detail">Eligibility and exclusions</text>
+    <text x="140" y="105" text-anchor="middle" class="detail">Missing information</text>
+    <text x="140" y="128" text-anchor="middle" class="detail">Scheme conflicts</text>
+  </g>
+
+  <path class="arrow" d="M1250 492 H1200"/>
+
+  <g transform="translate(920 415)">
+    <rect class="result" width="280" height="155"/>
+    <circle cx="26" cy="26" r="17" fill="#4f46e5"/>
+    <text x="26" y="31" text-anchor="middle" class="number">7</text>
+    <text x="140" y="58" text-anchor="middle" class="step">Best-Fit Bundle</text>
+    <text x="140" y="88" text-anchor="middle" class="detail">Ranked eligible schemes</text>
+    <text x="140" y="111" text-anchor="middle" class="detail">with clear reasons</text>
+  </g>
+
+  <path class="arrow" d="M920 492 H870"/>
+
+  <g transform="translate(590 415)">
+    <rect class="box" width="280" height="155"/>
+    <circle cx="26" cy="26" r="17" fill="#3730a3"/>
+    <text x="26" y="31" text-anchor="middle" class="number">8</text>
+    <text x="140" y="58" text-anchor="middle" class="step">Documents &amp; Next Steps</text>
+    <text x="140" y="88" text-anchor="middle" class="detail">Personal checklist</text>
+    <text x="140" y="111" text-anchor="middle" class="detail">and application order</text>
+  </g>
+
+  <path class="arrow" d="M590 492 H540"/>
+
+  <!-- Decision -->
+  <polygon points="400,415 540,492 400,570 260,492" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+  <circle cx="286" cy="445" r="17" fill="#d97706"/>
+  <text x="286" y="450" text-anchor="middle" class="number">9</text>
+  <text x="400" y="487" text-anchor="middle" class="step">How do I apply?</text>
+  <text x="400" y="514" text-anchor="middle" class="detail">Choose a route</text>
+
+  <path class="arrow" d="M340 548 C300 600 250 616 215 645"/>
+  <path class="arrow" d="M460 548 C500 600 550 616 585 645"/>
+  <text x="260" y="611" text-anchor="middle" class="branch">Online</text>
+  <text x="540" y="611" text-anchor="middle" class="branch">In person</text>
+
+  <g transform="translate(80 645)">
+    <rect class="action" width="270" height="105"/>
+    <text x="135" y="47" text-anchor="middle" class="step">Official Portal</text>
+    <text x="135" y="74" text-anchor="middle" class="detail">Open the application website</text>
+  </g>
+
+  <g transform="translate(450 645)">
+    <rect class="action" width="270" height="105"/>
+    <text x="135" y="47" text-anchor="middle" class="step">Local Office</text>
+    <text x="135" y="74" text-anchor="middle" class="detail">See verified office details</text>
+  </g>
+
+  <path class="arrow" d="M215 750 C215 805 510 790 635 805"/>
+  <path class="arrow" d="M585 750 V785"/>
+
+  <g transform="translate(635 770)">
+    <rect class="action" width="330" height="80"/>
+    <text x="165" y="36" text-anchor="middle" class="step">Save Plan to Dashboard</text>
+    <text x="165" y="60" text-anchor="middle" class="detail">Track the checklist and return later</text>
+  </g>
+
+  <!-- Missing-information feedback loop -->
+  <path d="M1530 492 H1565 V145 H1390 V185" fill="none" stroke="#6366f1" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
+  <rect x="1288" y="126" width="204" height="32" rx="16" fill="#eef2ff"/>
+  <text x="1390" y="147" text-anchor="middle" class="branch">Update missing details</text>
+</svg>

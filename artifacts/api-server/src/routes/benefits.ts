@@ -18,7 +18,7 @@ import {
   SaveCitizenProfileResponse,
 } from "@workspace/api-zod";
 import { analyzeProfile, checklistFor, detectConflicts, evaluateEligibility, optimizeBundle, saveProfile } from "../lib/benefit-engine";
-import { schemeById, schemes } from "../lib/schemes";
+import { publicSchemeById, schemeDetailsById, schemes } from "../lib/schemes";
 
 const router: IRouter = Router();
 
@@ -98,18 +98,27 @@ router.get("/schemes", (_req, res) => {
   res.json(ListSchemesResponse.parse(schemes));
 });
 
+router.get("/schemes/:id/details", (req, res) => {
+  const detail = schemeDetailsById.get(req.params.id);
+  if (!detail) {
+    res.status(404).json({ error: "Scheme not found" });
+    return;
+  }
+  res.json(detail);
+});
+
 router.get("/schemes/:id", (req, res) => {
   const params = GetSchemeParams.safeParse(req.params);
   if (!params.success) {
     res.status(400).json({ error: params.error.message });
     return;
   }
-  const scheme = schemeById.get(params.data.id);
+  const scheme = publicSchemeById.get(params.data.id);
   if (!scheme) {
     res.status(404).json({ error: "Scheme not found" });
     return;
   }
-  res.json(GetSchemeResponse.parse(schemes.find((item) => item.id === scheme.id)));
+  res.json(GetSchemeResponse.parse(scheme));
 });
 
 router.get("/demo-profiles", (_req, res) => {
@@ -125,13 +134,23 @@ router.post("/citizen/profile", (req, res) => {
   res.json(SaveCitizenProfileResponse.parse(saveProfile(parsed.data)));
 });
 
-router.post("/analyze", (req, res) => {
+router.post("/analyze", async (req, res) => {
   const parsed = AnalyzeBenefitsBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: parsed.error.message });
     return;
   }
-  res.json(AnalyzeBenefitsResponse.parse(analyzeProfile(parsed.data)));
+  try {
+    res.json(AnalyzeBenefitsResponse.parse(await analyzeProfile(parsed.data)));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Benefit analysis failed.";
+    const unavailable = /(?:429|503|rate limit|too large|unavailable|Gemini)/i.test(message);
+    res.status(unavailable ? 503 : 502).json({
+      error: unavailable
+        ? "Analysis is temporarily busy. Your details are still here — wait a moment and try again."
+        : "We could not complete the analysis. Please try again.",
+    });
+  }
 });
 
 router.post("/eligibility", (req, res) => {

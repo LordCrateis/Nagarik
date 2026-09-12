@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-09-11",
+  "status": "initial-cache",
+  "totalScrapedResults": 30,
+  "batches": [
+    {
+      "sourceId": "myscheme",
+      "file": "search-myscheme-scraped.json",
+      "results": 10,
+      "markdownResults": 10,
+      "scope": "official myScheme detail pages"
+    },
+    {
+      "sourceId": "eshram-welfare",
+      "file": "search-eshram-scraped.json",
+      "results": 5,
+      "markdownResults": 5,
+      "scope": "e-Shram social security and employment pages"
+    },
+    {
+      "sourceId": "national-scholarship-portal",
+      "file": "search-nsp-scraped.json",
+      "results": 5,
+      "markdownResults": 5,
+      "scope": "NSP eligibility and scheme guideline PDFs"
+    },
+    {
+      "sourceId": "jansamarth",
+      "file": "search-credit-schemes-scraped.json",
+      "results": 5,
+      "markdownResults": 5,
+      "scope": "official credit-scheme discovery results"
+    },
+    {
+      "sourceId": "mahadbt",
+      "file": "search-state-portals-scraped.json",
+      "results": 5,
+      "markdownResults": 4,
+      "scope": "Maharashtra public scheme detail pages"
+    }
+  ],
+  "recordShape": "raw Firecrawl result; normalize into canonicalSchemeId records using config/scheme-sources.json",
+  "deduplication": {
+    "script": "scripts/dedupe-scheme-cache.mjs",
+    "schemeCandidates": 37,
+    "uniqueSchemes": 34,
+    "duplicateRecordsCollapsed": 3,
+    "crossSourceMatches": [
+      "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana",
+      "National Scholarship For Post Graduate Studies"
+    ]
+  },
+  "refresh": "Use each source refreshHours value; retain raw Markdown and update this manifest after every batch."
+}

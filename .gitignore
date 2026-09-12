@@ -11,6 +11,17 @@ out-tsc
 # dependencies
 node_modules
 
+# local credentials and environment overrides
+.env
+.env.*
+!.env.example
+
+# reproducible local ingestion caches
+.firecrawl/normalized/
+.firecrawl/groq/
+.firecrawl/enrichment/
+scripts/__pycache__/
+
 # IDEs and editors
 /.idea
 .project

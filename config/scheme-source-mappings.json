@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "myscheme",
+      "name": "myScheme",
+      "authority": "Digital India Corporation, MeitY, Government of India",
+      "trustRank": 20,
+      "governmentLevel": "aggregator",
+      "hosts": ["myscheme.gov.in", "www.myscheme.gov.in"],
+      "pathPrefixes": ["/schemes/"],
+      "defaultState": null
+    },
+    {
+      "id": "india-gov-schemes",
+      "name": "National Portal of India - Schemes",
+      "authority": "National Informatics Centre, Government of India",
+      "trustRank": 25,
+      "governmentLevel": "aggregator",
+      "hosts": ["india.gov.in", "www.india.gov.in", "services.india.gov.in"],
+      "pathPrefixes": ["/my-government/schemes", "/schemes", "/service/"],
+      "defaultState": null
+    },
+    {
+      "id": "mahadbt2",
+      "name": "MahaDBT",
+      "authority": "Government of Maharashtra",
+      "trustRank": 5,
+      "governmentLevel": "state",
+      "hosts": ["mahadbt2.maharashtra.gov.in", "mahadbt.maharashtra.gov.in", "www.mahadbt.maharashtra.gov.in"],
+      "pathPrefixes": ["/"],
+      "defaultState": "Maharashtra"
+    },
+    {
+      "id": "rajasthan-jan-soochna",
+      "name": "Rajasthan Jan Soochna",
+      "authority": "Government of Rajasthan",
+      "trustRank": 5,
+      "governmentLevel": "state",
+      "hosts": ["jansoochna.rajasthan.gov.in", "www.jansoochna.rajasthan.gov.in"],
+      "pathPrefixes": ["/Scheme", "/Services", "/Eligibility"],
+      "defaultState": "Rajasthan"
+    },
+    {
+      "id": "goa-online",
+      "name": "Goa Online",
+      "authority": "Government of Goa",
+      "trustRank": 5,
+      "governmentLevel": "state",
+      "hosts": ["goaonline.gov.in", "www.goaonline.gov.in"],
+      "pathPrefixes": ["/Appln/UIL/deptServices", "/appln/uil/deptservices", "/Downloads/"],
+      "defaultState": "Goa"
+    },
+    {
+      "id": "national-scholarship-portal",
+      "name": "National Scholarship Portal",
+      "authority": "Government of India",
+      "trustRank": 10,
+      "governmentLevel": "central",
+      "hosts": ["scholarships.gov.in", "www.scholarships.gov.in"],
+      "pathPrefixes": ["/All-Scholarships", "/public/"],
+      "defaultState": null
+    },
+    {
+      "id": "eshram-welfare",
+      "name": "e-Shram Welfare Schemes",
+      "authority": "Ministry of Labour and Employment, Government of India",
+      "trustRank": 10,
+      "governmentLevel": "central",
+      "hosts": ["eshram.gov.in", "www.eshram.gov.in"],
+      "pathPrefixes": ["/social-security-welfare-schemes", "/employment-schemes"],
+      "defaultState": null
+    },
+    {
+      "id": "haryana-dbt",
+      "name": "Haryana DBT",
+      "authority": "Government of Haryana",
+      "trustRank": 5,
+      "governmentLevel": "state",
+      "hosts": ["dbtharyana.gov.in", "www.dbtharyana.gov.in", "saralharyana.gov.in", "www.saralharyana.gov.in"],
+      "pathPrefixes": ["/scheme/", "/data/documents/", "/"],
+      "defaultState": "Haryana"
+    },
+    {
+      "id": "west-bengal-schemes",
+      "name": "West Bengal Government Schemes",
+      "authority": "Government of West Bengal",
+      "trustRank": 5,
+      "governmentLevel": "state",
+      "hosts": ["wb.gov.in", "www.wb.gov.in", "cm.wb.gov.in"],
+      "pathPrefixes": ["/government-schemes", "/ncmo/Public/Scheme_Master"],
+      "defaultState": "West Bengal"
+    },
+    {
+      "id": "himachal-forms",
+      "name": "Himachal Pradesh Forms Repository",
+      "authority": "Government of Himachal Pradesh",
+      "trustRank": 8,
+      "governmentLevel": "state",
+      "hosts": ["himachalforms.nic.in", "www.himachalforms.nic.in"],
+      "pathPrefixes": ["/", "/pdfs/"],
+      "defaultState": "Himachal Pradesh"
+    },
+    {
+      "id": "assam-government",
+      "name": "Assam Government Scheme Pages",
+      "authority": "Government of Assam",
+      "trustRank": 6,
+      "governmentLevel": "state",
+      "hosts": ["assam.gov.in", "pnrd.assam.gov.in", "hfw.assam.gov.in", "ttwd.assam.gov.in", "directoratesainikwelfare.assam.gov.in"],
+      "pathPrefixes": ["/schemes", "/schemes/detail/", "/latest/"],
+      "defaultState": "Assam"
+    },
+    {
+      "id": "odisha-welfare",
+      "name": "Odisha Welfare Scheme Pages",
+      "authority": "Government of Odisha",
+      "trustRank": 6,
+      "governmentLevel": "state",
+      "hosts": ["mamata-pmmvy.odisha.gov.in", "wcd.odisha.gov.in", "stsc.odisha.gov.in", "scholarship.odisha.gov.in"],
+      "pathPrefixes": ["/"],
+      "defaultState": "Odisha"
+    },
+    {
+      "id": "west-bengal-oasis",
+      "name": "OASIS Scholarships",
+      "authority": "Backward Classes Welfare Department, Government of West Bengal",
+      "trustRank": 5,
+      "governmentLevel": "state",
+      "hosts": ["oasis.wb.gov.in", "www.oasis.wb.gov.in"],
+      "pathPrefixes": ["/"],
+      "defaultState": "West Bengal"
+    },
+    {
+      "id": "tamil-nadu-welfare",
+      "name": "Tamil Nadu Government Welfare Pages",
+      "authority": "Government of Tamil Nadu",
+      "trustRank": 7,
+      "governmentLevel": "state",
+      "hosts": ["tn.gov.in", "www.tn.gov.in", "chennai.nic.in"],
+      "pathPrefixes": ["/departments/", "/schemes", "/service/"],
+      "defaultState": "Tamil Nadu"
+    },
+    {
+      "id": "jansamarth",
+      "name": "JanSamarth",
+      "authority": "Department of Financial Services, Ministry of Finance, Government of India",
+      "trustRank": 10,
+      "governmentLevel": "central",
+      "hosts": ["jansamarth.in", "www.jansamarth.in", "financialservices.gov.in", "www.financialservices.gov.in"],
+      "pathPrefixes": ["/home", "/node/4300"],
+      "defaultState": null
+    }
+  ],
+  "blockedPathPatterns": [
+    "/login",
+    "/signin",
+    "/register",
+    "/application-status",
+    "/track-application",
+    "/aadhar-login",
+    "/aadhaar-login",
+    "/profile",
+    "/account"
+  ]
+}

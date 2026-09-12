@@ -1,14 +1,5 @@
 import type { ReactNode } from 'react';
-import { AlertCircle, Check, FileText, Info, LoaderCircle, Sparkles } from 'lucide-react';
-
-export function DemoDisclaimer({ compact = false }: { compact?: boolean }) {
-  return (
-    <div className={`flex items-start gap-2 rounded-xl border border-[hsl(var(--accent)/.35)] bg-[hsl(var(--accent)/.12)] px-3 py-2.5 text-xs leading-relaxed text-[hsl(var(--accent-foreground))] ${compact ? '' : 'max-w-2xl'}`} data-testid="notice-demo-disclaimer">
-      <Info size={15} className="mt-0.5 shrink-0" />
-      <span><strong className="font-semibold">Synthetic demo service.</strong> Benefits and scheme names are illustrative. Always confirm final rules with your local government office.</span>
-    </div>
-  );
-}
+import { AlertCircle, Check, FileText, LoaderCircle, Sparkles } from 'lucide-react';
 
 export function SectionKicker({ children }: { children: ReactNode }) {
   return <div className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[.18em] text-[hsl(var(--primary))]" data-testid="text-section-kicker"><span className="h-px w-7 bg-[hsl(var(--accent))]" />{children}</div>;
@@ -18,7 +9,7 @@ export function LoadingLines({ count = 3 }: { count?: number }) {
   return <div className="space-y-3" data-testid="loading-skeleton">{Array.from({ length: count }).map((_, index) => <div key={index} className="h-10 animate-pulse rounded-lg bg-[hsl(var(--muted))]" />)}</div>;
 }
 
-export function ErrorPanel({ message = 'Something went wrong while connecting to JanSahay.' }: { message?: string }) {
+export function ErrorPanel({ message = 'Something went wrong while connecting to Nagarik.' }: { message?: string }) {
   return <div className="flex items-start gap-3 rounded-xl border border-[hsl(var(--destructive)/.25)] bg-[hsl(var(--destructive)/.06)] p-4 text-sm text-[hsl(var(--destructive))]" data-testid="state-error"><AlertCircle size={18} className="mt-0.5 shrink-0" /><span>{message} Please try again in a moment.</span></div>;
 }
 

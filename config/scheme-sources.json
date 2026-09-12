@@ -1,0 +1,204 @@
+{
+  "version": 1,
+  "defaultLanguage": "en",
+  "sources": [
+    {
+      "id": "myscheme",
+      "name": "myScheme",
+      "authority": "Digital India Corporation, MeitY, Government of India",
+      "baseUrl": "https://www.myscheme.gov.in",
+      "discoveryUrls": [
+        "https://www.myscheme.gov.in/search",
+        "https://www.myscheme.gov.in/schemes"
+      ],
+      "detailUrlPattern": "https://www.myscheme.gov.in/schemes/{slug}",
+      "scope": "Central and State/UT schemes across categories",
+      "priority": 1,
+      "strategy": "map_then_scrape",
+      "refreshHours": 24,
+      "fieldsAvailable": [
+        "details",
+        "benefits",
+        "eligibility",
+        "exclusions",
+        "applicationProcess",
+        "documentsRequired",
+        "faqs",
+        "sourcesAndReferences",
+        "lastUpdated"
+      ],
+      "notes": "Primary catalogue for Nagarik. Prefer English pages for normalization and retain links to the responsible department."
+    },
+    {
+      "id": "india-gov-schemes",
+      "name": "National Portal of India — Government Schemes",
+      "authority": "National Informatics Centre, MeitY, Government of India",
+      "baseUrl": "https://www.india.gov.in",
+      "discoveryUrls": [
+        "https://www.india.gov.in/my-government/schemes?page=1"
+      ],
+      "scope": "Central and State/UT scheme discovery and service links",
+      "priority": 2,
+      "strategy": "crawl_paginated_catalogue",
+      "refreshHours": 72,
+      "fieldsAvailable": [
+        "title",
+        "description",
+        "category",
+        "governmentLevel",
+        "ministryOrDepartment",
+        "eligibilitySummary",
+        "benefitSummary",
+        "applicationUrl",
+        "lastReviewed"
+      ],
+      "notes": "Use as a discovery and cross-check source. Prefer the linked department page when it provides fuller rules."
+    },
+    {
+      "id": "eshram-welfare",
+      "name": "e-Shram Social Security Welfare Schemes",
+      "authority": "Ministry of Labour and Employment, Government of India",
+      "baseUrl": "https://eshram.gov.in",
+      "discoveryUrls": [
+        "https://eshram.gov.in/social-security-welfare-schemes"
+      ],
+      "scope": "Social security schemes relevant to unorganised workers",
+      "priority": 2,
+      "strategy": "scrape_collection_page",
+      "refreshHours": 72,
+      "fieldsAvailable": [
+        "title",
+        "description",
+        "eligibility",
+        "benefits",
+        "officialSchemeUrl"
+      ],
+      "notes": "Strong structured source for worker, insurance, pension, housing, and food-security benefit summaries."
+    },
+    {
+      "id": "national-scholarship-portal",
+      "name": "National Scholarship Portal",
+      "authority": "Government of India",
+      "baseUrl": "https://scholarships.gov.in",
+      "discoveryUrls": [
+        "https://scholarships.gov.in/All-Scholarships"
+      ],
+      "scope": "Central scholarship and fellowship schemes",
+      "priority": 2,
+      "strategy": "scrape_catalogue_and_linked_specifications",
+      "refreshHours": 12,
+      "fieldsAvailable": [
+        "title",
+        "ministryOrDepartment",
+        "schemeType",
+        "academicYear",
+        "applicationOpenDate",
+        "applicationDeadline",
+        "verificationDeadlines",
+        "eligibility",
+        "documentsRequired",
+        "specificationUrl",
+        "faqUrl"
+      ],
+      "notes": "Deadlines change frequently. Scrape public specification and FAQ links; never automate login, OTR, CAPTCHA, or applicant records."
+    },
+    {
+      "id": "jansamarth",
+      "name": "JanSamarth",
+      "authority": "Department of Financial Services, Ministry of Finance, Government of India",
+      "baseUrl": "https://www.jansamarth.in",
+      "discoveryUrls": [
+        "https://financialservices.gov.in/node/4300",
+        "https://www.jansamarth.in/home"
+      ],
+      "scope": "Credit-linked Central Government schemes",
+      "priority": 2,
+      "strategy": "scrape_public_scheme_pages",
+      "refreshHours": 24,
+      "fieldsAvailable": [
+        "title",
+        "sector",
+        "schemeDescription",
+        "eligibility",
+        "loanOrSubsidyTerms",
+        "documentsRequired",
+        "applicationUrl",
+        "lenders"
+      ],
+      "notes": "Use for public credit-scheme facts. Do not scrape authenticated eligibility results, bureau data, application forms, or personal financial data."
+    },
+    {
+      "id": "mahadbt2",
+      "name": "MahaDBT",
+      "authority": "Government of Maharashtra",
+      "baseUrl": "https://mahadbt2.maharashtra.gov.in",
+      "discoveryUrls": [
+        "https://mahadbt2.maharashtra.gov.in/en",
+        "https://mahadbt2.maharashtra.gov.in/en/farmer",
+        "https://mahadbt2.maharashtra.gov.in/en/pensioner",
+        "https://mahadbt2.maharashtra.gov.in/en/school-student",
+        "https://mahadbt2.maharashtra.gov.in/en/college-student",
+        "https://mahadbt2.maharashtra.gov.in/en/others",
+        "https://mahadbt2.maharashtra.gov.in/en/faq"
+      ],
+      "scope": "Maharashtra scholarships, pensions, subsidies, and welfare schemes",
+      "priority": 3,
+      "strategy": "map_then_scrape_public_category_pages",
+      "refreshHours": 24,
+      "fieldsAvailable": [
+        "title",
+        "department",
+        "academicYear",
+        "eligibility",
+        "benefits",
+        "documentsRequired",
+        "renewalRules",
+        "applicationWindow",
+        "applicationUrl"
+      ],
+      "notes": "The current portal exposes many schemes inside rendered category pages instead of one discoverable URL per scheme. Split schemes after extraction. Avoid CAPTCHA-protected eligibility search and all applicant/account pages."
+    },
+    {
+      "id": "saral-haryana",
+      "name": "Antyodaya SARAL Haryana",
+      "authority": "Government of Haryana",
+      "baseUrl": "https://saralharyana.gov.in",
+      "discoveryUrls": [
+        "https://www.haryana.gov.in/project/e-services-saral-haryana/"
+      ],
+      "scope": "Haryana government services and benefit schemes",
+      "priority": 3,
+      "strategy": "scrape_public_catalogue_and_scheme_pdfs",
+      "refreshHours": 72,
+      "fieldsAvailable": [
+        "title",
+        "department",
+        "description",
+        "eligibility",
+        "benefits",
+        "documentsRequired",
+        "applicationProcess",
+        "serviceUrl"
+      ],
+      "notes": "Public scheme PDFs often contain the best eligibility and document checklists. Avoid login, tracking, and CAPTCHA flows."
+    }
+  ],
+  "cachePolicy": {
+    "key": "sourceId:canonicalUrl:language",
+    "retainRawMarkdown": true,
+    "retainNormalizedRecord": true,
+    "retainContentHash": true,
+    "serveStaleWhileRevalidateHours": 168,
+    "deleteMissingAfterConsecutiveCrawls": 3,
+    "neverCache": [
+      "applicantProfiles",
+      "aadhaarNumbers",
+      "bankDetails",
+      "phoneNumbers",
+      "emailAddresses",
+      "OTRs",
+      "applicationStatuses",
+      "authenticatedResponses"
+    ]
+  }
+}
