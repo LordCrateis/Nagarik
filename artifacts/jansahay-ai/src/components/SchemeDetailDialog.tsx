@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { Scheme } from '@workspace/api-client-react';
 import { ArrowUpRight, Building2, CalendarDays, Check, FileText, Landmark, X } from 'lucide-react';
 import { LoadingLines, SectionKicker } from '@/components/Primitives';
+import { apiUrl } from '@/lib/api-url';
 
 type Benefit = { description: string; amountInr?: number | null; frequency?: string | null };
 type EligibilityRule = { rawText?: string; field?: string; operator?: string; value?: unknown };
@@ -45,7 +46,7 @@ export function SchemeDetailDialog({ scheme, onClose }: { scheme: Scheme | null;
     queryKey: ['scheme-details', scheme?.id],
     enabled: Boolean(scheme),
     queryFn: async () => {
-      const response = await fetch(`/api/schemes/${encodeURIComponent(scheme!.id)}/details`);
+      const response = await fetch(apiUrl(`/api/schemes/${encodeURIComponent(scheme!.id)}/details`));
       if (!response.ok) throw new Error('Could not load scheme details.');
       return response.json() as Promise<SchemeDetail>;
     },

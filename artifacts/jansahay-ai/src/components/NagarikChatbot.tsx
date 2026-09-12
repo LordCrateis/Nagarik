@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useAuthSession } from "@/lib/auth";
 import { useLanguage } from "@/lib/i18n";
+import { apiUrl } from "@/lib/api-url";
 
 type Message = {
   id: number;
@@ -125,7 +126,7 @@ export function NagarikChatbot() {
     ]);
     setTyping(true);
     try {
-      const response = await fetch("/api/chat", {
+      const response = await fetch(apiUrl("/api/chat"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text, history, language }),

@@ -7,6 +7,7 @@ import { BrandMark } from '@/components/BrandMark';
 import { ProfileAvatar } from '@/components/ProfileAvatar';
 import { EmptyState, ErrorPanel, LoadingLines, SchemeIcon, SectionKicker, SuccessTick } from '@/components/Primitives';
 import { loadLatestAnalysis, useAuthSession } from '@/lib/auth';
+import { apiUrl } from '@/lib/api-url';
 
 function money(value: number) {
   return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(value);
@@ -90,7 +91,7 @@ export default function ResultsPage() {
     if (!detailSchemeId) { setSchemeDetail(null); return; }
     let cancelled = false;
     setSchemeDetailLoading(true);
-    fetch(`/api/schemes/${detailSchemeId}/details`)
+    fetch(apiUrl(`/api/schemes/${detailSchemeId}/details`))
       .then((response) => response.ok ? response.json() : null)
       .then((detail: SchemeDetail | null) => { if (!cancelled) setSchemeDetail(detail); })
       .catch(() => { if (!cancelled) setSchemeDetail(null); })
