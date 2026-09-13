@@ -37,7 +37,7 @@ jobs:
 
       - run: pnpm --filter @workspace/jansahay-ai run build
         env:
-          BASE_PATH: /Nagarik/
+          BASE_PATH: /
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
